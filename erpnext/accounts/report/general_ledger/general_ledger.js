@@ -191,4 +191,27 @@ frappe.query_reports["General Ledger"] = {
 	]
 }
 
+frappe.query_reports["General Ledger"].onload = function (report) {
+  report.page.add_inner_button(__("Show Unposted Entries"), function () {
+    let filters = report.get_values();
+    
+    // Open the custom report with the same filters as the current report
+    frappe.set_route('query-report', 'Custom General Ledger', {
+      from_date: filters.from_date,
+      to_date: filters.to_date,
+      account: filters.account,
+      party_type: filters.party_type,
+      party: filters.party,
+      cost_center: filters.cost_center,
+      project: filters.project
+    });
+  });
+};
+
+
+
 erpnext.utils.add_dimensions('General Ledger', 15)
+
+
+
+  
